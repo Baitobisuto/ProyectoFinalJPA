@@ -1,6 +1,7 @@
 package org.dam48.proyectofinalbis.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -9,27 +10,23 @@ import java.util.Set;
 @Table(name = "playlists")
 public class Playlist {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "playlists_id_gen")
-    @SequenceGenerator(name = "playlists_id_gen", sequenceName = "playlists_id_playlist_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ColumnDefault("nextval('playlists_id_playlist_seq')")
     @Column(name = "id_playlist", nullable = false)
     private Integer id;
-
-    @Column(name = "nombre_playlist", nullable = false)
-    private String nombrePlaylist;
 
     @Column(name = "url_imagen")
     private String urlImagen;
 
-    @Column(name = "descripcion", length = Integer.MAX_VALUE)
-    private String descripcion;
+    @Column(name = "nombre")
+    private String nombre;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "canciones_playlist", // Nombre de la tabla de unión
-            joinColumns = @JoinColumn(name = "id_playlist"), // Columna de clave foránea para Playlist
-            inverseJoinColumns = @JoinColumn(name = "id_cancion") // Columna de clave foránea para Canciones
-    )
-    private Set<Canciones> canciones = new LinkedHashSet<>();
+   // @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) // o CascadeType.ALL
+   @JoinTable(name = "playlist_cancion",
+           joinColumns = @JoinColumn(name = "playlist_id"),
+           inverseJoinColumns = @JoinColumn(name = "cancion_id"))
+    private Set<Cancion> canciones = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -37,14 +34,6 @@ public class Playlist {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getNombrePlaylist() {
-        return nombrePlaylist;
-    }
-
-    public void setNombrePlaylist(String nombrePlaylist) {
-        this.nombrePlaylist = nombrePlaylist;
     }
 
     public String getUrlImagen() {
@@ -55,19 +44,19 @@ public class Playlist {
         this.urlImagen = urlImagen;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public Set<Canciones> getCanciones() {
+    public Set<Cancion> getCanciones() {
         return canciones;
     }
 
-    public void setCanciones(Set<Canciones> canciones) {
+    public void setCanciones(Set<Cancion> canciones) {
         this.canciones = canciones;
     }
 

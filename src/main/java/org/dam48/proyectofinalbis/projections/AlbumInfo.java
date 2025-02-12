@@ -1,18 +1,20 @@
 package org.dam48.proyectofinalbis.projections;
 
+import java.util.Set;
+
 /**
  * Projection for {@link org.dam48.proyectofinalbis.entities.Album}
  */
 public interface AlbumInfo {
     Integer getId();
 
-    String getTituloAlbum();
+    String getTitulo();
 
     String getUrlImagen();
 
-    Integer getAnioLanzamiento();
+    ArtistaInfo getArtista();
 
-    ArtistaInfo getIdArtista();
+    Set<CancionInfo> getCanciones();
 
     /**
      * Projection for {@link org.dam48.proyectofinalbis.entities.Artista}
@@ -20,8 +22,17 @@ public interface AlbumInfo {
     interface ArtistaInfo {
         Integer getId();
 
-        String getNombreArtista();
+        String getNombre();
+    }
 
-        String getBiografia();
+    /**
+     * Projection for {@link org.dam48.proyectofinalbis.entities.Cancion}
+     */
+    interface CancionInfo {
+        Integer getId();
+
+        String getTitulo();
+
+        String getDuracion();
     }
 }

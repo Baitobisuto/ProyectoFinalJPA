@@ -2,41 +2,35 @@ package org.dam48.proyectofinalbis.entities;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "albums")
+@Table(name = "albumes")
 public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ColumnDefault("nextval('albums_id_album_seq')")
+    @ColumnDefault("nextval('albumes_id_album_seq')")
     @Column(name = "id_album", nullable = false)
     private Integer id;
 
-    @Column(name = "titulo_album", nullable = false)
-    private String tituloAlbum;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_artista")
-    private Artista idArtista;
+    @Column(name = "titulo", nullable = false)
+    private String titulo;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "artista_id", nullable = false)
+    private Artista artista;
 
     @Column(name = "url_imagen")
     private String urlImagen;
 
-    @Column(name = "anio_lanzamiento")
-    private Integer anioLanzamiento;
-
-    @OneToMany(mappedBy = "album", fetch = FetchType.LAZY) // Añade esta línea
-    private List<Canciones> canciones;
-
-    public List<Canciones> getCanciones() { // Getter para la lista de canciones
-        return canciones;
-    }
-
-    public void setCanciones(List<Canciones> canciones) {
-        this.canciones = canciones;
-    }
+    @OneToMany(mappedBy = "album",cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Set<Cancion> canciones = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -46,20 +40,20 @@ public class Album {
         this.id = id;
     }
 
-    public String getTituloAlbum() {
-        return tituloAlbum;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setTituloAlbum(String tituloAlbum) {
-        this.tituloAlbum = tituloAlbum;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public Artista getIdArtista() {
-        return idArtista;
+    public Artista getArtista() {
+        return artista;
     }
 
-    public void setIdArtista(Artista idArtista) {
-        this.idArtista = idArtista;
+    public void setArtista(Artista artista) {
+        this.artista = artista;
     }
 
     public String getUrlImagen() {
@@ -70,12 +64,12 @@ public class Album {
         this.urlImagen = urlImagen;
     }
 
-    public Integer getAnioLanzamiento() {
-        return anioLanzamiento;
+    public Set<Cancion> getCanciones() {
+        return canciones;
     }
 
-    public void setAnioLanzamiento(Integer anioLanzamiento) {
-        this.anioLanzamiento = anioLanzamiento;
+    public void setCanciones(Set<Cancion> canciones) {
+        this.canciones = canciones;
     }
 
 }

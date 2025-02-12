@@ -3,6 +3,9 @@ package org.dam48.proyectofinalbis.entities;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "artistas")
 public class Artista {
@@ -12,14 +15,11 @@ public class Artista {
     @Column(name = "id_artista", nullable = false)
     private Integer id;
 
-    @Column(name = "nombre_artista", nullable = false)
-    private String nombreArtista;
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
 
-    @Column(name = "biografia", length = Integer.MAX_VALUE)
-    private String biografia;
-
-    @OneToOne(mappedBy = "idArtista")
-    private Album album;
+    @OneToMany(mappedBy = "artista",cascade = CascadeType.ALL)
+    private Set<Album> albumes = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -29,28 +29,20 @@ public class Artista {
         this.id = id;
     }
 
-    public String getNombreArtista() {
-        return nombreArtista;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreArtista(String nombreArtista) {
-        this.nombreArtista = nombreArtista;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getBiografia() {
-        return biografia;
+    public Set<Album> getAlbumes() {
+        return albumes;
     }
 
-    public void setBiografia(String biografia) {
-        this.biografia = biografia;
-    }
-
-    public Album getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(Album album) {
-        this.album = album;
+    public void setAlbumes(Set<Album> albumes) {
+        this.albumes = albumes;
     }
 
 }

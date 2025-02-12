@@ -1,8 +1,6 @@
 package org.dam48.proyectofinalbis.repositories;
 
-import org.dam48.proyectofinalbis.entities.Canciones;
 import org.dam48.proyectofinalbis.entities.Playlist;
-import org.dam48.proyectofinalbis.projections.AlbumInfo;
 import org.dam48.proyectofinalbis.projections.PlaylistInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,7 +15,7 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer> {
 
     @Query("""
             select p from Playlist p inner join p.canciones canciones
-            where upper(canciones.tituloCancion) like upper(?1)""")
+            where upper(canciones.titulo) like upper(?1)""")
     List<Playlist> obtenerCancionesPlaylist(String tituloCancion);
 
     //Método para obtener canciones de un playlist

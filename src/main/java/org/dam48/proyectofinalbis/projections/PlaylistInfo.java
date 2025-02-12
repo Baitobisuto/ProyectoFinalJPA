@@ -8,50 +8,20 @@ import java.util.Set;
 public interface PlaylistInfo {
     Integer getId();
 
-    String getNombrePlaylist();
-
     String getUrlImagen();
 
-    String getDescripcion();
+    String getNombre();
 
-    Set<CancionesInfo> getCanciones();
+    Set<CancionInfo> getCanciones();
 
     /**
-     * Projection for {@link org.dam48.proyectofinalbis.entities.Canciones}
+     * Projection for {@link org.dam48.proyectofinalbis.entities.Cancion}
      */
-    interface CancionesInfo {
+    interface CancionInfo {
         Integer getId();
 
-        String getTituloCancion();
+        String getTitulo();
 
         String getDuracion();
-
-        AlbumInfo1 getAlbum();
-
-        /**
-         * Projection for {@link org.dam48.proyectofinalbis.entities.Album}
-         */
-        interface AlbumInfo1 {
-            Integer getId();
-
-            String getTituloAlbum();
-
-            String getUrlImagen();
-
-            Integer getAnioLanzamiento();
-
-            ArtistaInfo getIdArtista();
-
-            /**
-             * Projection for {@link org.dam48.proyectofinalbis.entities.Artista}
-             */
-            interface ArtistaInfo {
-                Integer getId();
-
-                String getNombreArtista();
-
-                String getBiografia();
-            }
-        }
     }
 }

@@ -8,31 +8,31 @@ import java.util.Objects;
  */
 public class AlbumDto implements Serializable {
     private final Integer id;
-    private final String tituloAlbum;
+    private final String titulo;
+    private final ArtistaDto artista;
     private final String urlImagen;
-    private final Integer anioLanzamiento;
 
-    public AlbumDto(Integer id, String tituloAlbum, String urlImagen, Integer anioLanzamiento) {
+    public AlbumDto(Integer id, String titulo, ArtistaDto artista, String urlImagen) {
         this.id = id;
-        this.tituloAlbum = tituloAlbum;
+        this.titulo = titulo;
+        this.artista = artista;
         this.urlImagen = urlImagen;
-        this.anioLanzamiento = anioLanzamiento;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public String getTituloAlbum() {
-        return tituloAlbum;
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public ArtistaDto getArtista() {
+        return artista;
     }
 
     public String getUrlImagen() {
         return urlImagen;
-    }
-
-    public Integer getAnioLanzamiento() {
-        return anioLanzamiento;
     }
 
     @Override
@@ -41,22 +41,56 @@ public class AlbumDto implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         AlbumDto entity = (AlbumDto) o;
         return Objects.equals(this.id, entity.id) &&
-                Objects.equals(this.tituloAlbum, entity.tituloAlbum) &&
-                Objects.equals(this.urlImagen, entity.urlImagen) &&
-                Objects.equals(this.anioLanzamiento, entity.anioLanzamiento);
+                Objects.equals(this.titulo, entity.titulo) &&
+                Objects.equals(this.artista, entity.artista) &&
+                Objects.equals(this.urlImagen, entity.urlImagen);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tituloAlbum, urlImagen, anioLanzamiento);
+        return Objects.hash(id, titulo, artista, urlImagen);
     }
 
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "id = " + id + ", " +
-                "tituloAlbum = " + tituloAlbum + ", " +
-                "urlImagen = " + urlImagen + ", " +
-                "anioLanzamiento = " + anioLanzamiento + ")";
+                "titulo = " + titulo + ", " +
+                "artista = " + artista + ", " +
+                "urlImagen = " + urlImagen + ")";
+    }
+
+    /**
+     * DTO for {@link org.dam48.proyectofinalbis.entities.Artista}
+     */
+    public static class ArtistaDto implements Serializable {
+        private final Integer id;
+
+        public ArtistaDto(Integer id) {
+            this.id = id;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            ArtistaDto entity = (ArtistaDto) o;
+            return Objects.equals(this.id, entity.id);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id);
+        }
+
+        @Override
+        public String toString() {
+            return getClass().getSimpleName() + "(" +
+                    "id = " + id + ")";
+        }
     }
 }
