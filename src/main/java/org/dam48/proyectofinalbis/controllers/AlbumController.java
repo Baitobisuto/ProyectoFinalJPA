@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("albums")
 public class AlbumController {
+
     @Autowired
     private AlbumService albumService;
 
@@ -20,14 +21,14 @@ public class AlbumController {
     }
 
     //FUNCIONA
-    @PostMapping("/crear")
+    @PostMapping("/crearAlbum")
     public ResponseEntity<ResponseModel> crearAlbum(@RequestBody AlbumDto albumDto){
         return ResponseEntity.ok(albumService.crearAlbum(albumDto));
     }
 
     //FUNCIONA
     @GetMapping("/cancionesPorAlbum/{idAlbum}")
-    public ResponseEntity<ResponseModel> obtenerCancionesPorAlbum(@PathVariable Integer idAlbum){
-        return ResponseEntity.ok(albumService.obtenerCancionesPorAlbum(idAlbum));
+    public ResponseEntity<ResponseModel> obtenerCancionesDeAlbum(@PathVariable Integer idAlbum){
+        return ResponseEntity.ok(albumService.obtenerCancionesDeAlbum(idAlbum));
     }
 }

@@ -8,6 +8,7 @@ import org.dam48.proyectofinalbis.entities.Playlist;
 import org.dam48.proyectofinalbis.mappers.EditarPlaylistMapper;
 import org.dam48.proyectofinalbis.mappers.PlaylistMapper;
 import org.dam48.proyectofinalbis.models.ResponseModel;
+import org.dam48.proyectofinalbis.projections.PlaylistInfo;
 import org.dam48.proyectofinalbis.repositories.CancionRepository;
 import org.dam48.proyectofinalbis.repositories.PlaylistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,26 +84,20 @@ public class PlayListService {
         return new ResponseModel(1,"Error al editar la playlist",null);
     }
 
-    public ResponseModel obtenerPlaylists() {
-        List<Playlist> listaPlaylists = playListRepository.findAll();
+    public ResponseModel obtenerPlaylists(int idPlaylist) {
+        List<PlaylistInfo> listaPlaylists = playListRepository.findAllBy();
         if (!listaPlaylists.isEmpty()) {
             return new ResponseModel(0, "Lista de playlists", listaPlaylists);
         }
         return new ResponseModel(1, "No se encontraron playlists", null);
     }
-
-    public ResponseModel obtenerCancionesPorPlaylist(Integer idPlaylist) {
-        Optional<Playlist> playlist = playListRepository.findById(idPlaylist);
-        if (playlist.isPresent()) {
-            Set<Cancion> listaCanciones = playlist.get().getCanciones();
-            if (!listaCanciones.isEmpty()) {
-                return new ResponseModel(0, "Lista de canciones", listaCanciones);
-            } else {
-                return new ResponseModel(1, "No se encontraron canciones para este playlist", null);
-            }
+    //REVISAR ESTO
+    public ResponseModel obtenerCancionesPorPlaylist(int idPlaylist) {
+       PlaylistInfo playlist = playListRepository.getCancionesPlayList(idPlaylist);
+        if (playlist == null) {
+            return new ResponseModel(1, "No se encontraron canciones para este playlist", null);
         }
-        return new ResponseModel(1, "No se encontró el playlist", null);
-
+        return new ResponseModel(0, "Lista de canciones", playlist);
     }
 
 

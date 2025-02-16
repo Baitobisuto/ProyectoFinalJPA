@@ -1,5 +1,6 @@
 package org.dam48.proyectofinalbis.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -17,6 +18,7 @@ public class Artista {
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
+
 
     @OneToMany(mappedBy = "artista",cascade = CascadeType.ALL)
     private Set<Album> albumes = new LinkedHashSet<>();

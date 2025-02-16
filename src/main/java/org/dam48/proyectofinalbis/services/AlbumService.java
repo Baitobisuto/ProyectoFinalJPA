@@ -5,11 +5,15 @@ import org.dam48.proyectofinalbis.entities.Album;
 import org.dam48.proyectofinalbis.entities.Cancion;
 import org.dam48.proyectofinalbis.mappers.AlbumMapper;
 import org.dam48.proyectofinalbis.models.ResponseModel;
+import org.dam48.proyectofinalbis.projections.AlbumInfo;
+import org.dam48.proyectofinalbis.projections.CancionInfo;
 import org.dam48.proyectofinalbis.repositories.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,7 +38,7 @@ public class AlbumService {
     }
 
     public ResponseModel obtenerAlbum() {
-        List<Album> listaAlbums = albumRepository.findAll();
+        List<AlbumInfo> listaAlbums = albumRepository.findAllBy();
 
         if (listaAlbums.isEmpty()) {
             return new ResponseModel(1, "No se encontraron álbumes", null);
@@ -42,17 +46,18 @@ public class AlbumService {
         return new ResponseModel(0, "Lista de álbumes", listaAlbums);
     }
 
-    public ResponseModel obtenerCancionesPorAlbum(Integer idAlbum) {
-        return albumRepository.findById(idAlbum)
-                .map(album -> {
-                    Set<Cancion> cancionesSet = album.getCanciones();
+    //REVISAR
+    public ResponseModel obtenerCancionesDeAlbum(Integer idAlbum) {
+        AlbumInfo album = albumRepository.findAlbumById(idAlbum);
 
-                    if (cancionesSet == null || cancionesSet.isEmpty()) {
-                        return new ResponseModel(1, "No se encontraron canciones para este álbum", null);
-                    }
-
-                    return new ResponseModel(0, "Lista de canciones", cancionesSet.stream().collect(Collectors.toList()));
-                })
-                .orElse(new ResponseModel(1, "No se encontró el álbum", null));
+        if (album == null) {
+            return new ResponseModel(1, "No se encontró el álbum", null);
+        }
+        // Si no hay canciones, devolvemos un mensaje de error
+        if (album.getCanciones() == null || album.getCanciones().isEmpty()) {
+            return new ResponseModel(1, "No se encontraron canciones para este álbum", null);
+        }
+        return null;
     }
 }
+

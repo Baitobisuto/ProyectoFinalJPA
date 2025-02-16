@@ -15,27 +15,26 @@ public class PlayListController {
     @Autowired
     PlayListService playListService;
 
-    //FUNCIONA
     @PutMapping("/editar")
     public ResponseEntity<ResponseModel> editarPlayList(@RequestBody EditarPlaylistDto playlistDto) {
         return ResponseEntity.ok(playListService.editarPlayList(playlistDto));
     }
 
-    //FUNCIONA
+
     @PostMapping("/crear")
     public ResponseEntity<ResponseModel> crearPlayList(@RequestBody PlaylistDto playlistDto) {
         return ResponseEntity.ok(playListService.crearPlayList(playlistDto));
     }
 
-    //FUNCIONA
-    @GetMapping("/obtener")
-    public ResponseEntity<ResponseModel> obtenerPlaylists() {
-        return ResponseEntity.ok(playListService.obtenerPlaylists());
+
+    @GetMapping("/obtenerPlaylists/{idPlaylist}")
+    public ResponseEntity<ResponseModel> obtenerPlaylists(@PathVariable int idPlaylist) {
+        return ResponseEntity.ok(playListService.obtenerPlaylists(idPlaylist));
     }
 
-    //FUNCIONA
+
     @GetMapping("/cancionesPorPlaylist/{idPlaylist}")
-    public ResponseEntity<ResponseModel> obtenerCancionesPorPlaylist(@PathVariable Integer idPlaylist) {
+    public ResponseEntity<ResponseModel> obtenerCancionesPorPlaylist(@PathVariable int idPlaylist) {
         return ResponseEntity.ok(playListService.obtenerCancionesPorPlaylist(idPlaylist));
     }
 
