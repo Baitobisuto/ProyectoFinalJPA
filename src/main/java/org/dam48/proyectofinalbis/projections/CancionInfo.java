@@ -8,6 +8,8 @@ public interface CancionInfo {
 
     String getTitulo();
 
+    String getDuracion();
+
     AlbumInfo1 getAlbum();
 
     /**
@@ -18,6 +20,15 @@ public interface CancionInfo {
 
         String getTitulo();
 
-        String getUrlImagen();
+        ArtistaInfo getArtista();
+
+        /**
+         * Projection for {@link org.dam48.proyectofinalbis.entities.Artista}
+         */
+        interface ArtistaInfo {
+            Integer getId();
+
+            String getNombre();
+        }
     }
 }

@@ -14,19 +14,19 @@ public class AlbumController {
     @Autowired
     private AlbumService albumService;
 
-    //FUNCIONA
+    //Obtiene id y titulo del album,id y nombre del artista, urlImagen y canciones del album con id de la cancion,titulo y duracion
     @GetMapping("/obtenerAlbums")
     public ResponseEntity<ResponseModel> obtenerAlbums(){
         return ResponseEntity.ok(albumService.obtenerAlbum());
     }
 
-    //FUNCIONA
+    //Crea un album con id,titulo,artista,urlImagen
     @PostMapping("/crearAlbum")
     public ResponseEntity<ResponseModel> crearAlbum(@RequestBody AlbumDto albumDto){
         return ResponseEntity.ok(albumService.crearAlbum(albumDto));
     }
 
-    //FUNCIONA
+    // Obtiene id,titulo y duracion de las canciones de un album
     @GetMapping("/cancionesPorAlbum/{idAlbum}")
     public ResponseEntity<ResponseModel> obtenerCancionesDeAlbum(@PathVariable Integer idAlbum){
         return ResponseEntity.ok(albumService.obtenerCancionesDeAlbum(idAlbum));

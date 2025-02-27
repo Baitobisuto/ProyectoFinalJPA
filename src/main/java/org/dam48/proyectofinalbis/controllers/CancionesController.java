@@ -8,11 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/canciones")
 public class CancionesController {
+
     @Autowired
     private CancionService cancionService;
 
-
+    // Revisar DTO, obtiene titulo cancion,duracion y album (atributos del album)
     @PutMapping("/editarCancion/{id}")
     public ResponseEntity<ResponseModel> editarCancion(@PathVariable("id") Integer id, @RequestBody CancionDto cancionDto) {
         return ResponseEntity.ok(cancionService.editarCancion(id, cancionDto.getTitulo()));

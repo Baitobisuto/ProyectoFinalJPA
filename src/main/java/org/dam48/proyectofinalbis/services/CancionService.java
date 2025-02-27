@@ -4,12 +4,10 @@ import jakarta.transaction.Transactional;
 import org.dam48.proyectofinalbis.entities.Cancion;
 import org.dam48.proyectofinalbis.mappers.CancionMapper;
 import org.dam48.proyectofinalbis.models.ResponseModel;
-import org.dam48.proyectofinalbis.projections.CancionInfo;
 import org.dam48.proyectofinalbis.repositories.CancionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 

@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 
@@ -31,7 +30,6 @@ public class PlayListService {
     private EditarPlaylistMapper editarPlaylistMapper;
     @Autowired
     private CancionRepository cancionRepository;
-
 
 
     @Transactional
@@ -84,7 +82,7 @@ public class PlayListService {
         return new ResponseModel(1,"Error al editar la playlist",null);
     }
 
-    public ResponseModel obtenerPlaylists(int idPlaylist) {
+    public ResponseModel obtenerPlaylists() {
         List<PlaylistInfo> listaPlaylists = playListRepository.findAllBy();
         if (!listaPlaylists.isEmpty()) {
             return new ResponseModel(0, "Lista de playlists", listaPlaylists);

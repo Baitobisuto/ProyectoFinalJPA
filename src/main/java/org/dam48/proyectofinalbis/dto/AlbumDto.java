@@ -19,6 +19,7 @@ public class AlbumDto implements Serializable {
         this.urlImagen = urlImagen;
     }
 
+
     public Integer getId() {
         return id;
     }
@@ -32,6 +33,7 @@ public class AlbumDto implements Serializable {
     }
 
     public String getUrlImagen() {
+
         return urlImagen;
     }
 

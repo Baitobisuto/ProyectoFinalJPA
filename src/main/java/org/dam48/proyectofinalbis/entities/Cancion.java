@@ -1,7 +1,8 @@
 package org.dam48.proyectofinalbis.entities;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -22,11 +23,9 @@ public class Cancion {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "album_id", nullable = false)
+    @JsonIgnore
     private Album album;
 
-    @Version
-    @Column(name = "version")
-    private Integer version = 0;
 
 
     @Column(name = "duracion")
