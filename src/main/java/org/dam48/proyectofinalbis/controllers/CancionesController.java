@@ -2,7 +2,10 @@ package org.dam48.proyectofinalbis.controllers;
 
 import org.dam48.proyectofinalbis.dto.CancionDto;
 import org.dam48.proyectofinalbis.dto.PlaylistDto;
+import org.dam48.proyectofinalbis.entities.Cancion;
+import org.dam48.proyectofinalbis.mappers.CancionMapper;
 import org.dam48.proyectofinalbis.models.ResponseModel;
+import org.dam48.proyectofinalbis.repositories.CancionRepository;
 import org.dam48.proyectofinalbis.services.CancionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,12 @@ public class CancionesController {
 
     @Autowired
     private CancionService cancionService;
+
+    @Autowired
+    private CancionRepository cancionRepository;
+
+    @Autowired
+    private CancionMapper cancionMapper;
 
     @PostMapping("/crear")
     public ResponseEntity<ResponseModel> crearCancion(@RequestBody CancionDto cancionDto) {
