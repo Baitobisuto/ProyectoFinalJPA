@@ -24,9 +24,48 @@ public class CancionesController {
     @Autowired
     private CancionMapper cancionMapper;
 
+//    @PostMapping("/crear")
+//    public ResponseEntity<ResponseModel> crearCancion(@RequestBody CancionDto cancionDto) {
+//        return ResponseEntity.ok(cancionService.crearCancion(cancionDto));
+//    }
+
     @PostMapping("/crear")
     public ResponseEntity<ResponseModel> crearCancion(@RequestBody CancionDto cancionDto) {
-        return ResponseEntity.ok(cancionService.crearCancion(cancionDto));
+        ResponseModel responseModel = cancionService.crearCancion(cancionDto);
+
+        if(responseModel.getSuccess() != 0){
+            return ResponseEntity.ok(responseModel);
+        }
+
+        try{
+            // Obtener el id de la cancion recien creada
+            Integer idCancion = (Integer) responseModel.getData();
+
+            // Verificar que la URL del audio tenga una extensión válida
+            String urlAudioOriginal = cancionDto.getArchivo();
+            if(urlAudioOriginal != null && !urlAudioOriginal.isEmpty() && urlAudioOriginal.contains(".")){
+                String extension = urlAudioOriginal.substring(urlAudioOriginal.lastIndexOf("."));
+
+                String nombreAudio = idCancion +  extension;
+
+                Cancion cancion = cancionMapper.toEntity(cancionDto);
+                cancion.setId(idCancion);
+                cancion.setArchivo(nombreAudio);
+
+                cancionRepository.save(cancion);
+
+                responseModel.setMessage("Cancion creada con exito");
+                responseModel.setData(idCancion);
+            } else{
+                responseModel.setSuccess(1);
+                responseModel.setMessage("Extensión del audio no válida");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseModel.setSuccess(1);
+            responseModel.setMessage("Error al actualizar el nombre de la imagen");
+        }
+        return ResponseEntity.ok(responseModel);
     }
 
     // Revisar DTO, obtiene titulo cancion,duracion y album (atributos del album)

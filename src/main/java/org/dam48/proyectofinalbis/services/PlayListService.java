@@ -54,7 +54,7 @@ public class PlayListService {
         playlist = playListRepository.save(playlist);
 
         if(playlist.getId()!=null){
-            return new ResponseModel(0,"Playlist creada correctamente",playlist);
+            return new ResponseModel(0,"Playlist creada correctamente",playlist.getId());
         }
         return new ResponseModel(1,"Error al crear la playlist",null);
     }
