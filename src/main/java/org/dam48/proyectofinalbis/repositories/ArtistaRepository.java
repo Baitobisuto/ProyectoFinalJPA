@@ -9,4 +9,7 @@ import java.util.List;
 public interface ArtistaRepository extends JpaRepository<Artista, Integer> {
 
     List<ArtistaInfo> findAllBy();
+
+    @Override
+    void deleteById(Integer integer);
 }

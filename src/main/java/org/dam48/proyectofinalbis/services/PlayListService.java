@@ -32,7 +32,7 @@ public class PlayListService {
     private CancionRepository cancionRepository;
 
 
-    @Transactional
+
     public ResponseModel crearPlayList(PlaylistDto playListDto){
         Playlist playlist = playlistMapper.toEntity(playListDto);
 
@@ -58,6 +58,13 @@ public class PlayListService {
         }
         return new ResponseModel(1,"Error al crear la playlist",null);
     }
+
+    @Transactional
+    public ResponseModel borrarPlaylist(int id){
+        playListRepository.deleteById(id);
+        return new ResponseModel(0,"Playlist eliminada",null);
+    }
+
     @Transactional
     public ResponseModel editarPlayList(EditarPlaylistDto playListDto){
         Playlist playlist = editarPlaylistMapper.toEntity(playListDto);

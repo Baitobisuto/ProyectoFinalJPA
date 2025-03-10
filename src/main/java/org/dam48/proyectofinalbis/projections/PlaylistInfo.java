@@ -12,16 +12,40 @@ public interface PlaylistInfo {
 
     String getNombre();
 
-    Set<CancionInfo> getCanciones();
+    Set<CancionInfo1> getCanciones();
 
     /**
      * Projection for {@link org.dam48.proyectofinalbis.entities.Cancion}
      */
-    interface CancionInfo {
+    interface CancionInfo1 {
         Integer getId();
 
         String getTitulo();
 
-        String getDuracion();
+        String getArchivo();
+
+        AlbumInfo1 getAlbum();
+
+        /**
+         * Projection for {@link org.dam48.proyectofinalbis.entities.Album}
+         */
+        interface AlbumInfo1 {
+            Integer getId();
+
+            String getTitulo();
+
+            String getUrlImagen();
+
+            ArtistaInfo1 getArtista();
+
+            /**
+             * Projection for {@link org.dam48.proyectofinalbis.entities.Artista}
+             */
+            interface ArtistaInfo1 {
+                Integer getId();
+
+                String getNombre();
+            }
+        }
     }
 }

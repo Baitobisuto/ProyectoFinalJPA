@@ -82,4 +82,11 @@ public class AlbumController {
     public ResponseEntity<ResponseModel> obtenerCancionesDeAlbum(@PathVariable Integer idAlbum){
         return ResponseEntity.ok(albumService.obtenerCancionesDeAlbum(idAlbum));
     }
+
+    @DeleteMapping("/borrarAlbum/{id_album}")
+    public ResponseEntity<ResponseModel> borrarAlbum(@PathVariable Integer id_album){
+        return ResponseEntity.ok(albumService.borrarAlbum(id_album));
+    }
+
+
 }

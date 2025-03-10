@@ -22,7 +22,7 @@ public class Playlist {
     private String nombre;
 
    // @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) // o CascadeType.ALL
+   @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE}) // o CascadeType.ALL
    @JoinTable(name = "playlist_cancion",
            joinColumns = @JoinColumn(name = "playlist_id"),
            inverseJoinColumns = @JoinColumn(name = "cancion_id"))

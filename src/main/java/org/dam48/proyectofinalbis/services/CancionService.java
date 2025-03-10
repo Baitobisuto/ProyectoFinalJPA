@@ -65,4 +65,9 @@ public class CancionService {
         return new ResponseModel(1, "No se encontraron playlists", null);
     }
 
+    public ResponseModel borrarAlbum(Integer idCancion) {
+        cancionRepository.deleteById(idCancion);
+        return new ResponseModel(0, "Cancion borrada correctamente", null);
+    }
+
 }

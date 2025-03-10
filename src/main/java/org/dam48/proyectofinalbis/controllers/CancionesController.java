@@ -24,11 +24,6 @@ public class CancionesController {
     @Autowired
     private CancionMapper cancionMapper;
 
-//    @PostMapping("/crear")
-//    public ResponseEntity<ResponseModel> crearCancion(@RequestBody CancionDto cancionDto) {
-//        return ResponseEntity.ok(cancionService.crearCancion(cancionDto));
-//    }
-
     @PostMapping("/crear")
     public ResponseEntity<ResponseModel> crearCancion(@RequestBody CancionDto cancionDto) {
         ResponseModel responseModel = cancionService.crearCancion(cancionDto);
@@ -78,4 +73,5 @@ public class CancionesController {
     public ResponseEntity<ResponseModel> obtenerCanciones() {
         return ResponseEntity.ok(cancionService.obtenerCanciones());
     }
+
 }

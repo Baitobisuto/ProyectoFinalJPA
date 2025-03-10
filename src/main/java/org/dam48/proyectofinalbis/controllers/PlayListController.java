@@ -1,17 +1,23 @@
 package org.dam48.proyectofinalbis.controllers;
 
+import jakarta.transaction.Transactional;
 import org.dam48.proyectofinalbis.dto.AlbumDto;
 import org.dam48.proyectofinalbis.dto.EditarPlaylistDto;
 import org.dam48.proyectofinalbis.dto.PlaylistDto;
 import org.dam48.proyectofinalbis.entities.Album;
+import org.dam48.proyectofinalbis.entities.Cancion;
 import org.dam48.proyectofinalbis.entities.Playlist;
 import org.dam48.proyectofinalbis.mappers.PlaylistMapper;
 import org.dam48.proyectofinalbis.models.ResponseModel;
+import org.dam48.proyectofinalbis.repositories.CancionRepository;
 import org.dam48.proyectofinalbis.repositories.PlaylistRepository;
 import org.dam48.proyectofinalbis.services.PlayListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @RestController
 @RequestMapping("playlists")
@@ -23,6 +29,9 @@ public class PlayListController {
     private PlaylistMapper playlistMapper;
     @Autowired
     private PlaylistRepository playlistRepository;
+
+    @Autowired
+    private CancionRepository cancionRepository;
 
 
     // Edita playlist
@@ -60,10 +69,21 @@ public class PlayListController {
                 // Guardar solo "ID + extensión" en la base de datos (ejemplo: "123.png")
                 String nombreImagen = idPlaylist + extension;
 
+
+                Set<Cancion> canciones = new LinkedHashSet<>();
+                for (PlaylistDto.CancionDto1 cancionDto1 : playlistDto.getCanciones()) {
+                    // Obtén la canción existente desde la base de datos
+                    Cancion cancionExistente = cancionRepository.findById(cancionDto1.getId())
+                            .orElseThrow(() -> new RuntimeException("Canción no encontrada"));
+                    canciones.add(cancionExistente);
+                }
+
                 // Actualizar la URL de la imagen en la entidad Album
                 Playlist playlist = playlistMapper.toEntity(playlistDto); // Convertir el DTO a la entidad
                 playlist.setId(idPlaylist); // Asignar el ID recién creado
                 playlist.setUrlImagen(nombreImagen); // Guardar solo "ID + extensión"
+                playlist.setCanciones(canciones);
+
 
                 // Guardar el álbum con la URL de imagen actualizada en la base de datos
                 playlistRepository.save(playlist);
@@ -84,15 +104,15 @@ public class PlayListController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("borrar/{id}")
+    public ResponseEntity<ResponseModel> borrarPlaylist(@PathVariable Integer id) {
+        return ResponseEntity.ok(playListService.borrarPlaylist(id));
+    }
+
     //Obtiene todas las playlists,id,nombre,canciones e imagen
     @GetMapping("/obtenerPlaylists")
     public ResponseEntity<ResponseModel> obtenerPlaylists() {
         return ResponseEntity.ok(playListService.obtenerPlaylists());
     }
 
-    //Muestra id playlist,nombre,canciones e imagen busqueda por id de playlist
-    @GetMapping("/cancionesPorPlaylist/{idPlaylist}")
-    public ResponseEntity<ResponseModel> obtenerCancionesPorPlaylist(@PathVariable int idPlaylist) {
-        return ResponseEntity.ok(playListService.obtenerCancionesPorPlaylist(idPlaylist));
-    }
 }

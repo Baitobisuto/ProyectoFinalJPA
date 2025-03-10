@@ -56,5 +56,10 @@ public class AlbumService {
         // Retornamos las canciones en la respuesta
         return new ResponseModel(0, "Canciones encontradas", album.getCanciones());
     }
+
+    public ResponseModel borrarAlbum(Integer idAlbum) {
+        albumRepository.deleteById(idAlbum);
+        return new ResponseModel(0, "Álbum borrado correctamente", null);
+    }
 }
 

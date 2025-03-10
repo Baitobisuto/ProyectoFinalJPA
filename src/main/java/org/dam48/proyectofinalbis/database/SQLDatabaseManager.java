@@ -8,9 +8,9 @@ import java.util.Properties;
 
 public class SQLDatabaseManager {
     private static final String SSH_HOST = "mvs.sytes.net";
-    private static final int SSH_PORT = 11160;
+    private static final int SSH_PORT = 11120;
     private static final String SSH_USER = "sshuser";
-    private static final String SSH_PRIVATE_KEY = "C:\\Users\\blanq\\Documents\\acceso_remoto\\proyectofinal\\id_rsa";
+    private static final String SSH_PRIVATE_KEY = "C:\\Users\\blanq\\Documents\\acceso_remoto\\eventos\\id_rsa";
     private static final String DB_HOST = "127.0.0.1";
     private static final int DB_PORT = 5432;
     public static final int LOCAL_PORT = 5434;

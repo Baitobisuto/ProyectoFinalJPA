@@ -12,7 +12,6 @@ public interface AlbumRepository extends JpaRepository<Album, Integer> {
     List<AlbumInfo> findAllBy();
     AlbumInfo findAlbumById(Integer idAlbum);
 
-
-
-
+    @Override
+    void deleteById(Integer integer);
 }
